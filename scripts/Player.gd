@@ -1,15 +1,12 @@
 extends CharacterBody3D
 
-# Settings
 var mouse_sensitivity = 0.002
 
-# States
 enum { IDLE, AIMING, SCOPED, RELOADING, SHOOTING }
 var current_state = IDLE
 var is_scoped = false
 var can_shoot = true
 
-# Weapon Stats
 var weapon_damage = 100
 var reload_time = 2.0
 var weapon_zoom = 4
@@ -29,6 +26,7 @@ var wind_speed = 2.0
 @onready var ammo_label = $CanvasLayer/HUD/TopBar/AmmoLabel
 @onready var mission_label = $CanvasLayer/HUD/MissionLabel
 @onready var wind_indicator = $CanvasLayer/ScopeUI/WindIndicator
+@onready var distance_indicator = $CanvasLayer/ScopeUI/DistanceIndicator
 
 var score = 0
 var targets_in_level = 5
@@ -46,14 +44,12 @@ func setup_visuals():
 	update_hud()
 
 func _input(event):
-	# Mouse look - use relative movement
 	if event is InputEventMouseMotion:
 		var sensitivity = mouse_sensitivity * 20.0
 		rotate_y(-event.relative.x * sensitivity)
 		camera.rotate_x(-event.relative.y * sensitivity)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-89), deg_to_rad(89))
 	
-	# Handle mouse buttons for shooting/scoping
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed and can_shoot:
 			shoot()
@@ -67,6 +63,7 @@ func _input(event):
 func _process(delta):
 	update_breathing(delta)
 	update_wind_indicator()
+	update_distance_indicator()
 
 func update_breathing(delta):
 	if not is_scoped:
@@ -77,6 +74,21 @@ func update_wind_indicator():
 	if wind_indicator:
 		var dir_text = "E" if wind_direction.x > 0 else "W"
 		wind_indicator.text = "WIND: %.1f %s" % [wind_speed, dir_text]
+
+func update_distance_indicator():
+	if distance_indicator and is_scoped:
+		var space_state = get_world_3d().direct_space_state
+		var ray_origin = camera.global_position
+		var ray_dir = -camera.global_transform.basis.z * 500
+		var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_origin + ray_dir)
+		query.collide_with_bodies = true
+		
+		var result = space_state.intersect_ray(query)
+		if result:
+			var dist = ray_origin.distance_to(result.position)
+			distance_indicator.text = "DISTANCE: %.1fm" % dist
+		else:
+			distance_indicator.text = "DISTANCE: ---"
 
 func toggle_scope():
 	is_scoped = !is_scoped
