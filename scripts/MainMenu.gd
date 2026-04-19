@@ -22,7 +22,7 @@ func _ready():
 	for btn_name in button_connections:
 		var btn = find_child(btn_name, true, false)
 		if btn:
-			btn.pressed.connect(button_connections[btn_name]
+			btn.pressed.connect(button_connections[btn_name])
 	
 	var slider = find_child("SensitivitySlider", true, false)
 	if slider:
