@@ -1,23 +1,7 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene format=3 uid="uid://e2jj2sqb31h"]
 
-[ext_resource type="Script" path="res://scripts/Player.gd" id="1_player"]
-[ext_resource type="Script" path="res://scripts/Target.gd" id="2_target"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_1"]
-size = Vector2(200, 200)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
-size = Vector3(1, 2, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_1"]
-size = Vector3(1, 2, 1)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_Floor"]
-size = Vector3(200, 1, 200)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_Floor"]
-albedo_color = Color(0.15, 0.18, 0.15, 1)
-roughness = 0.9
+[ext_resource type="Script" uid="uid://b4l7lo70hybun" path="res://scripts/Player.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://dhsmppsu36bt5" path="res://scripts/Target.gd" id="2_target"]
 
 [sub_resource type="Environment" id="Environment_1"]
 background_mode = 1
@@ -28,6 +12,20 @@ fog_enabled = true
 fog_light_color = Color(0.05, 0.05, 0.1, 1)
 fog_density = 0.001
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_Floor"]
+albedo_color = Color(0.15, 0.18, 0.15, 1)
+roughness = 0.9
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1"]
+size = Vector2(200, 200)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_Floor"]
+size = Vector3(200, 1, 200)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_Building"]
+albedo_color = Color(0.2, 0.2, 0.25, 1)
+roughness = 0.7
+
 [sub_resource type="BoxMesh" id="BoxMesh_Building1"]
 size = Vector3(15, 30, 15)
 
@@ -37,14 +35,10 @@ size = Vector3(10, 20, 10)
 [sub_resource type="BoxMesh" id="BoxMesh_Building3"]
 size = Vector3(8, 15, 8)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_Building"]
-albedo_color = Color(0.2, 0.2, 0.25, 1)
-roughness = 0.7
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_Target"]
-albedo_color = Color(0.7, 0.15, 0.15, 1)
-metallic = 0.3
-roughness = 0.5
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_Gun"]
+albedo_color = Color(0.1, 0.1, 0.1, 1)
+metallic = 0.9
+roughness = 0.2
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_Gun"]
 top_radius = 0.015
@@ -56,114 +50,120 @@ top_radius = 0.04
 bottom_radius = 0.03
 height = 0.4
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_Gun"]
-albedo_color = Color(0.1, 0.1, 0.1, 1)
-metallic = 0.9
-roughness = 0.2
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_Scope"]
 albedo_color = Color(0.3, 0.3, 0.35, 1)
 metallic = 0.8
 roughness = 0.1
 
-[node name="Main" type="Node3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_Target"]
+albedo_color = Color(0.7, 0.15, 0.15, 1)
+metallic = 0.3
+roughness = 0.5
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[sub_resource type="BoxMesh" id="BoxMesh_1"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
+size = Vector3(1, 2, 1)
+
+[node name="Main" type="Node3D" unique_id=398543257]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=200806389]
 environment = SubResource("Environment_1")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=958666384]
 transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 30, 10)
-shadow_enabled = true
-shadow_blur = 3.0
 light_color = Color(1, 0.95, 0.8, 1)
 light_energy = 1.2
+shadow_enabled = true
+shadow_blur = 3.0
 
-[node name="AmbientLight" type="DirectionalLight3D" parent="."]
+[node name="AmbientLight" type="DirectionalLight3D" parent="." unique_id=289429354]
 transform = Transform3D(1, 0, 0, 0, 0.5, 0.866, 0, -0.86, 0.5, -10, 20, -10)
 light_color = Color(0.4, 0.5, 0.7, 1)
 light_energy = 0.3
 
-[node name="Floor" type="StaticBody3D" parent="."]
+[node name="Floor" type="StaticBody3D" parent="." unique_id=1199025054]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-mesh = SubResource("PlaneMesh_1")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=1493560135]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.007825732, 0, 0.043924868)
 material_override = SubResource("StandardMaterial3D_Floor")
+mesh = SubResource("PlaneMesh_1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=146668803]
 shape = SubResource("BoxShape3D_Floor")
 
-[node name="Building1" type="StaticBody3D" parent="."]
+[node name="Building1" type="StaticBody3D" parent="." unique_id=808937690]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 15, -30)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Building1"]
-mesh = SubResource("BoxMesh_Building1")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building1" unique_id=1616543915]
 material_override = SubResource("StandardMaterial3D_Building")
+mesh = SubResource("BoxMesh_Building1")
 
-[node name="Building2" type="StaticBody3D" parent="."]
+[node name="Building2" type="StaticBody3D" parent="." unique_id=285509982]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 10, -40)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Building2"]
-mesh = SubResource("BoxMesh_Building2")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building2" unique_id=1592972367]
 material_override = SubResource("StandardMaterial3D_Building")
+mesh = SubResource("BoxMesh_Building2")
 
-[node name="Building3" type="StaticBody3D" parent="."]
+[node name="Building3" type="StaticBody3D" parent="." unique_id=1447462503]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 7.5, -25)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Building3"]
-mesh = SubResource("BoxMesh_Building3")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Building3" unique_id=299541971]
 material_override = SubResource("StandardMaterial3D_Building")
+mesh = SubResource("BoxMesh_Building3")
 
-[node name="Player" type="CharacterBody3D" parent="."]
+[node name="Player" type="CharacterBody3D" parent="." unique_id=293227669]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 script = ExtResource("1_player")
 
-[node name="Camera3D" type="Camera3D" parent="Player"]
-fov = 75.0
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=912263593]
 
-[node name="GunModel" type="Node3D" parent="Player/Camera3D"]
+[node name="GunModel" type="Node3D" parent="Player/Camera3D" unique_id=1724152152]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, -0.25, -0.5)
 
-[node name="Barrel" type="MeshInstance3D" parent="Player/Camera3D/GunModel"]
+[node name="Barrel" type="MeshInstance3D" parent="Player/Camera3D/GunModel" unique_id=36531413]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0.061945617, 0.30462337, -0.3278166)
+material_override = SubResource("StandardMaterial3D_Gun")
 mesh = SubResource("CylinderMesh_Gun")
-material_override = SubResource("StandardMaterial3D_Gun")
-transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0.4)
 
-[node name="Stock" type="MeshInstance3D" parent="Player/Camera3D/GunModel"]
+[node name="Stock" type="MeshInstance3D" parent="Player/Camera3D/GunModel" unique_id=407052013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0732238, 0.18861878, -0.09611988)
+material_override = SubResource("StandardMaterial3D_Gun")
 mesh = SubResource("CylinderMesh_Stock")
-material_override = SubResource("StandardMaterial3D_Gun")
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.1)
 
-[node name="ScopeMount" type="Node3D" parent="Player/Camera3D/GunModel"]
+[node name="ScopeMount" type="Node3D" parent="Player/Camera3D/GunModel" unique_id=1887307979]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0.15)
 
-[node name="ScopeMesh" type="MeshInstance3D" parent="Player/Camera3D/GunModel/ScopeMount"]
-mesh = SubResource("CylinderMesh_Gun")
+[node name="ScopeMesh" type="MeshInstance3D" parent="Player/Camera3D/GunModel/ScopeMount" unique_id=972080887]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0.046898365, 0.18122518, -0.2264395)
 material_override = SubResource("StandardMaterial3D_Scope")
-transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.02, 0)
+mesh = SubResource("CylinderMesh_Gun")
 
-[node name="Muzzle" type="Marker3D" parent="Player/Camera3D/GunModel"]
+[node name="Muzzle" type="Marker3D" parent="Player/Camera3D/GunModel" unique_id=893877809]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.9)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Player"]
+[node name="CanvasLayer" type="CanvasLayer" parent="Player" unique_id=748195219]
 
-[node name="HUD" type="Control" parent="Player/CanvasLayer"]
-layout_mode = 1
+[node name="HUD" type="Control" parent="Player/CanvasLayer" unique_id=245805878]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="TopBar" type="Panel" parent="Player/CanvasLayer/HUD"]
+[node name="TopBar" type="Panel" parent="Player/CanvasLayer/HUD" unique_id=251922861]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -320.0
-offset_top = 0.0
-offset_right = 0.0
 offset_bottom = 80.0
 grow_horizontal = 0
 
-[node name="ScoreLabel" type="Label" parent="Player/CanvasLayer/HUD/TopBar"]
+[node name="ScoreLabel" type="Label" parent="Player/CanvasLayer/HUD/TopBar" unique_id=470730153]
 layout_mode = 1
 offset_left = 20.0
 offset_top = 10.0
@@ -173,7 +173,7 @@ theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
 theme_override_font_sizes/font_size = 24
 text = "KILLS: 0"
 
-[node name="AmmoLabel" type="Label" parent="Player/CanvasLayer/HUD/TopBar"]
+[node name="AmmoLabel" type="Label" parent="Player/CanvasLayer/HUD/TopBar" unique_id=576416094]
 layout_mode = 1
 offset_left = 20.0
 offset_top = 40.0
@@ -183,7 +183,7 @@ theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
 theme_override_font_sizes/font_size = 20
 text = "READY"
 
-[node name="MissionLabel" type="Label" parent="Player/CanvasLayer/HUD"]
+[node name="MissionLabel" type="Label" parent="Player/CanvasLayer/HUD" unique_id=1054013791]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -198,10 +198,10 @@ theme_override_font_sizes/font_size = 28
 text = "TARGETS: 5"
 horizontal_alignment = 2
 
-[node name="ReloadBar" type="ProgressBar" parent="Player/CanvasLayer/HUD"]
+[node name="ReloadBar" type="ProgressBar" parent="Player/CanvasLayer/HUD" unique_id=1760860782]
 visible = false
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -213,7 +213,7 @@ offset_bottom = 130.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Crosshair" type="ColorRect" parent="Player/CanvasLayer/HUD"]
+[node name="Crosshair" type="ColorRect" parent="Player/CanvasLayer/HUD" unique_id=1081171670]
 layout_mode = 1
 offset_left = 638.0
 offset_top = 358.0
@@ -221,29 +221,33 @@ offset_right = 642.0
 offset_bottom = 362.0
 color = Color(1, 1, 1, 0.9)
 
-[node name="ScopeUI" type="Control" parent="Player/CanvasLayer"]
+[node name="ScopeUI" type="Control" parent="Player/CanvasLayer" unique_id=227860397]
 visible = false
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="ScopeOverlay" type="ColorRect" parent="Player/CanvasLayer/ScopeUI"]
+[node name="ScopeOverlay" type="ColorRect" parent="Player/CanvasLayer/ScopeUI" unique_id=1314836373]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0, 0, 0, 0.85)
 
-[node name="ScopeCircle" type="ColorRect" parent="Player/CanvasLayer/ScopeUI"]
+[node name="ScopeCircle" type="ColorRect" parent="Player/CanvasLayer/ScopeUI" unique_id=199371529]
 layout_mode = 1
-offset_left = 540
-offset_top = 260
-offset_right = 740
-offset_bottom = 460
+offset_left = 540.0
+offset_top = 260.0
+offset_right = 740.0
+offset_bottom = 460.0
 color = Color(0, 0, 0, 0)
 
-[node name="CrosshairV" type="ColorRect" parent="Player/CanvasLayer/ScopeUI"]
+[node name="CrosshairV" type="ColorRect" parent="Player/CanvasLayer/ScopeUI" unique_id=39008347]
 layout_mode = 1
 offset_left = 638.0
 offset_top = 260.0
@@ -251,7 +255,7 @@ offset_right = 642.0
 offset_bottom = 460.0
 color = Color(0, 0, 0, 1)
 
-[node name="CrosshairH" type="ColorRect" parent="Player/CanvasLayer/ScopeUI"]
+[node name="CrosshairH" type="ColorRect" parent="Player/CanvasLayer/ScopeUI" unique_id=2104554874]
 layout_mode = 1
 offset_left = 540.0
 offset_top = 358.0
@@ -259,7 +263,7 @@ offset_right = 740.0
 offset_bottom = 362.0
 color = Color(0, 0, 0, 1)
 
-[node name="WindIndicator" type="Label" parent="Player/CanvasLayer/ScopeUI"]
+[node name="WindIndicator" type="Label" parent="Player/CanvasLayer/ScopeUI" unique_id=2005286605]
 layout_mode = 1
 offset_left = 540.0
 offset_top = 600.0
@@ -269,7 +273,7 @@ theme_override_colors/font_color = Color(0.3, 1, 0.3, 1)
 theme_override_font_sizes/font_size = 20
 text = "WIND: 2.0 E"
 
-[node name="DistanceIndicator" type="Label" parent="Player/CanvasLayer/ScopeUI"]
+[node name="DistanceIndicator" type="Label" parent="Player/CanvasLayer/ScopeUI" unique_id=1594034096]
 layout_mode = 1
 offset_left = 540.0
 offset_top = 630.0
@@ -279,57 +283,57 @@ theme_override_colors/font_color = Color(1, 0.9, 0.3, 1)
 theme_override_font_sizes/font_size = 20
 text = "DISTANCE: ---m"
 
-[node name="Target1" type="StaticBody3D" parent="."]
+[node name="Target1" type="StaticBody3D" parent="." unique_id=120035416]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 1, -60)
 script = ExtResource("2_target")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Target1"]
-mesh = SubResource("BoxMesh_1")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Target1" unique_id=500318622]
 material_override = SubResource("StandardMaterial3D_Target")
+mesh = SubResource("BoxMesh_1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Target1"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Target1" unique_id=747182407]
 shape = SubResource("BoxShape3D_1")
 
-[node name="Target2" type="StaticBody3D" parent="."]
+[node name="Target2" type="StaticBody3D" parent="." unique_id=855100051]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 1, -80)
 script = ExtResource("2_target")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Target2"]
-mesh = SubResource("BoxMesh_1")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Target2" unique_id=840656352]
 material_override = SubResource("StandardMaterial3D_Target")
+mesh = SubResource("BoxMesh_1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Target2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Target2" unique_id=1323773876]
 shape = SubResource("BoxShape3D_1")
 
-[node name="Target3" type="StaticBody3D" parent="."]
+[node name="Target3" type="StaticBody3D" parent="." unique_id=109267126]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 1, -100)
 script = ExtResource("2_target")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Target3"]
-mesh = SubResource("BoxMesh_1")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Target3" unique_id=418272840]
 material_override = SubResource("StandardMaterial3D_Target")
+mesh = SubResource("BoxMesh_1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Target3"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Target3" unique_id=276611900]
 shape = SubResource("BoxShape3D_1")
 
-[node name="Target4" type="StaticBody3D" parent="."]
+[node name="Target4" type="StaticBody3D" parent="." unique_id=2067392764]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 1, -120)
 script = ExtResource("2_target")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Target4"]
-mesh = SubResource("BoxMesh_1")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Target4" unique_id=1996580089]
 material_override = SubResource("StandardMaterial3D_Target")
+mesh = SubResource("BoxMesh_1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Target4"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Target4" unique_id=607788726]
 shape = SubResource("BoxShape3D_1")
 
-[node name="Target5" type="StaticBody3D" parent="."]
+[node name="Target5" type="StaticBody3D" parent="." unique_id=1631077445]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1, -150)
 script = ExtResource("2_target")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Target5"]
-mesh = SubResource("BoxMesh_1")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Target5" unique_id=1186499574]
 material_override = SubResource("StandardMaterial3D_Target")
+mesh = SubResource("BoxMesh_1")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Target5"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Target5" unique_id=1346264463]
 shape = SubResource("BoxShape3D_1")
