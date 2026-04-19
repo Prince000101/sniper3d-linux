@@ -1,0 +1,10 @@
+63f7b34db8d8cdea90c76aacccf841ec
+::res://::1776593186
+README.md::TextFile::-1::1776591839::0::1::::<><><>0<>0<><>::
+::res://scenes/::1776593036
+Bullet.tscn::PackedScene::3164556420763200631::1776591988::0::1::::<><><>0<>0<><>::uid://7gv3b048srh6::::res://scripts/Bullet.gd
+Main.tscn::PackedScene::9913457225239795::1776593036::0::1::::<><><>0<>0<><>::uid://b4l7lo70hybun::::res://scripts/Player.gd<>uid://dhsmppsu36bt5::::res://scripts/Target.gd
+::res://scripts/::1776590822
+Bullet.gd::GDScript::2259754414524742097::1776590802::0::1::::<>Node3D<><>0<>0<><>::
+Player.gd::GDScript::4446568677899006857::1776592936::0::1::::<>CharacterBody3D<><>0<>0<><>::
+Target.gd::GDScript::7688498963544454624::1776592961::0::1::::<>StaticBody3D<><>0<>0<><>::

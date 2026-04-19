@@ -1,0 +1,204 @@
+[gd_scene format=3 uid="uid://e2jj2sqb31h"]
+
+[ext_resource type="Script" uid="uid://b4l7lo70hybun" path="res://scripts/Player.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://dhsmppsu36bt5" path="res://scripts/Target.gd" id="2_target"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.05, 0.05, 0.1, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3, 0.3, 0.4, 1)
+ssr_enabled = true
+sdfgi_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
+size = Vector3(1000, 1, 1000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.101960786, 0.4862745, 0.101960786, 1)
+roughness = 0.8
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1"]
+size = Vector2(1000, 1000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_Gun"]
+albedo_color = Color(0.1, 0.1, 0.1, 1)
+metallic = 0.9
+roughness = 0.2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1"]
+top_radius = 0.02
+bottom_radius = 0.02
+height = 1.2
+
+[sub_resource type="BoxMesh" id="BoxMesh_2"]
+size = Vector3(0.1, 0.1, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_RF"]
+albedo_color = Color(0.2, 0.2, 0.2, 1)
+metallic = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2"]
+size = Vector3(1, 2, 990.32666)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2"]
+albedo_color = Color(0.9411765, 0.06666667, 0.101960786, 1)
+metallic = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_1"]
+size = Vector3(1, 2, 1)
+
+[node name="Main" type="Node3D" unique_id=1353150695]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1616617789]
+environment = SubResource("Environment_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=426493340]
+transform = Transform3D(1, 0, 0, 0, 0.8, 0.6, 0, -0.6, 0.8, 0, 50, 0)
+shadow_enabled = true
+shadow_blur = 2.0
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=917857768]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=751170660]
+shape = SubResource("BoxShape3D_1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor" unique_id=569702324]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2189641, 0.34891433, -0.1487644)
+material_override = SubResource("StandardMaterial3D_1")
+mesh = SubResource("PlaneMesh_1")
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1313941331]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+script = ExtResource("1_player")
+
+[node name="Camera3D" type="Camera3D" parent="Player" unique_id=1919415]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="GunModel" type="Node3D" parent="Player/Camera3D" unique_id=595585656]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.3, -0.5)
+
+[node name="Barrel" type="MeshInstance3D" parent="Player/Camera3D/GunModel" unique_id=134778318]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.18651032, -0.31034166)
+material_override = SubResource("StandardMaterial3D_Gun")
+mesh = SubResource("CylinderMesh_1")
+
+[node name="Stock" type="MeshInstance3D" parent="Player/Camera3D/GunModel" unique_id=497370090]
+transform = Transform3D(0.9949073, 0.10042873, 0.008568974, -0.094884194, 0.96186787, -0.25652906, -0.034005113, 0.2544096, 0.96649855, 0, 0.1571101, 0.24199969)
+material_override = SubResource("StandardMaterial3D_Gun")
+mesh = SubResource("BoxMesh_2")
+
+[node name="RangefinderModel" type="Node3D" parent="Player/Camera3D" unique_id=306184154]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, -0.3, -0.5)
+
+[node name="RFMesh" type="MeshInstance3D" parent="Player/Camera3D/RangefinderModel" unique_id=233032361]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13044658, 0.05685419, 0)
+material_override = SubResource("StandardMaterial3D_RF")
+mesh = SubResource("BoxMesh_2")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Player" unique_id=445788760]
+
+[node name="ScopeUI" type="ColorRect" parent="Player/CanvasLayer" unique_id=944996685]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 0.8)
+
+[node name="Hole" type="ColorRect" parent="Player/CanvasLayer/ScopeUI" unique_id=85183704]
+layout_mode = 0
+offset_left = 540.0
+offset_top = 260.0
+offset_right = 740.0
+offset_bottom = 460.0
+color = Color(0, 0, 0, 0)
+
+[node name="CrosshairV" type="ColorRect" parent="Player/CanvasLayer/ScopeUI" unique_id=1446647536]
+layout_mode = 0
+offset_left = 639.0
+offset_top = 260.0
+offset_right = 641.0
+offset_bottom = 460.0
+color = Color(0, 0, 0, 1)
+
+[node name="CrosshairH" type="ColorRect" parent="Player/CanvasLayer/ScopeUI" unique_id=381795459]
+layout_mode = 0
+offset_left = 540.0
+offset_top = 359.0
+offset_right = 740.0
+offset_bottom = 361.0
+color = Color(0, 0, 0, 1)
+
+[node name="InfoUI" type="Control" parent="Player/CanvasLayer" unique_id=1421211462]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 1282.0
+offset_bottom = 721.0
+
+[node name="DistanceLabel" type="Label" parent="Player/CanvasLayer/InfoUI" unique_id=951271352]
+layout_mode = 0
+offset_left = 540.0
+offset_top = 600.0
+offset_right = 740.0
+offset_bottom = 640.0
+text = "DISTANCE: ---"
+horizontal_alignment = 1
+
+[node name="WindLabel" type="Label" parent="Player/CanvasLayer/InfoUI" unique_id=1132137577]
+layout_mode = 0
+offset_left = 540.0
+offset_top = 640.0
+offset_right = 740.0
+offset_bottom = 680.0
+text = "WIND: ---"
+horizontal_alignment = 1
+
+[node name="SettingsMenu" type="Panel" parent="Player/CanvasLayer" unique_id=1821300013]
+offset_left = 440.0
+offset_top = 210.0
+offset_right = 840.0
+offset_bottom = 510.0
+
+[node name="Label" type="Label" parent="Player/CanvasLayer/SettingsMenu" unique_id=724592683]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 60.0
+text = "Sensitivity"
+
+[node name="HSlider" type="HSlider" parent="Player/CanvasLayer/SettingsMenu" unique_id=160155798]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 60.0
+offset_right = 380.0
+offset_bottom = 100.0
+min_value = 0.1
+max_value = 2.0
+step = 0.1
+value = 2.0
+
+[node name="Target1" type="StaticBody3D" parent="." unique_id=1175639112]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 1, -50)
+script = ExtResource("2_target")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Target1" unique_id=2040366035]
+shape = SubResource("BoxShape3D_2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Target1" unique_id=259582910]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.85163784, 0.43307424, 1.4630203)
+material_override = SubResource("StandardMaterial3D_2")
+mesh = SubResource("BoxMesh_1")
+
+[node name="Target2" type="StaticBody3D" parent="." unique_id=1285559200]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 1, -100)
+script = ExtResource("2_target")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Target2" unique_id=6697057]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.292683, 0, -394.5396)
+shape = SubResource("BoxShape3D_2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Target2" unique_id=599283072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.40978, 0, 48.20799)
+material_override = SubResource("StandardMaterial3D_2")
+mesh = SubResource("BoxMesh_1")
