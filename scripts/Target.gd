@@ -36,7 +36,7 @@ func process_ai(delta):
 			current_state = WALKING
 			pick_next_patrol_point()
 
-func pick_next_patrol_index():
+func pick_next_patrol_point():
 	if patrol_points.size() > 0:
 		current_patrol_index = (current_patrol_index + 1) % patrol_points.size()
 		target_position = patrol_points[current_patrol_index]

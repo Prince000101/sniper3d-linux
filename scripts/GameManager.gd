@@ -7,6 +7,7 @@ var current_level = 1
 var coins = 0
 var diamonds = 0
 var current_weapon = 0
+var mouse_sensitivity = 0.0001
 
 # Weapons: [name, damage, reload_time, mag_size, zoom, stability, price]
 var weapons = [

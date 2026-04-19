@@ -1,7 +1,7 @@
 extends Control
 
 var game_manager = null
-var sensitivity_value = 0.3
+var sensitivity_value = 20
 
 func _ready():
 	if not get_node_or_null("/root/GameManager"):
@@ -26,6 +26,8 @@ func _ready():
 	
 	var slider = find_child("SensitivitySlider", true, false)
 	if slider:
+		slider.min_value = 1
+		slider.max_value = 100
 		slider.value_changed.connect(_on_sensitivity_changed)
 		slider.value = sensitivity_value
 	
@@ -42,9 +44,11 @@ func update_currency_display():
 
 func _on_sensitivity_changed(value):
 	sensitivity_value = value
+	if game_manager:
+		game_manager.mouse_sensitivity = value * 0.00001
 	var value_label = find_child("SensitivityValue", true, false)
 	if value_label:
-		value_label.text = "%.1f" % value
+		value_label.text = "%d%%" % value
 
 func _on_campaign_pressed():
 	get_tree().change_scene_to_file("res://scenes/Main.tscn")
