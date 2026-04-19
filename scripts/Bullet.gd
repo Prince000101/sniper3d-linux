@@ -1,41 +1,61 @@
 extends Node3D
 
 var velocity = Vector3.ZERO
-var gravity = Vector3(0, -9.8, 0)
-var drag_coefficient = 0.001 # Simple air resistance
-var lifetime = 5.0
-var timer = 0.0
+var gravity = Vector3(0, -5.0, 0) # Lighter gravity for arcade feel
+var damage = 100
+var wind_force = Vector3.ZERO
+var lifetime = 3.0
 
-# Global wind reference (could be moved to a singleton)
-var wind_force = Vector3(0.5, 0, 0) 
+var impact_particle = null
 
 func _process(delta):
-	timer += delta
-	if timer > lifetime:
+	lifetime -= delta
+	if lifetime <= 0:
 		queue_free()
+		return
 	
-	# Realistic Physics: Gravity + Wind + Drag
-	var total_force = gravity + wind_force
-	velocity += total_force * delta
-	velocity *= (1.0 - drag_coefficient) # Drag reduces speed over time
+	# Arcade-style ballistics (minimal drop)
+	velocity += gravity * delta
+	velocity += wind_force * delta
 	
-	global_position += velocity * delta
+	var movement = velocity * delta
+	global_position += movement
 	
-	if velocity.length() > 0.1:
-		look_at(global_position + velocity)
+	# Orient bullet direction
+	if velocity.length() > 1.0:
+		look_at(global_position + velocity, Vector3.UP)
+	
+	# Simple collision check
+	var space = get_world_3d().direct_space_state
+	if space:
+		var query = PhysicsRayQueryParameters3D.create(global_position, global_position + movement)
+		query.collide_with_bodies = true
+		query.collide_with_areas = false
+		
+		var result = space.intersect_ray(query)
+		if result:
+			handle_impact(result.position, result.collider)
 
-	var space_state = get_world_3d().direct_space_state
-	var query = PhysicsRayQueryParameters3D.create(global_position, global_position + velocity * delta)
-	var result = space_state.intersect_ray(query)
+func handle_impact(pos: Vector3, collider):
+	# Create impact effect
+	create_impact_effect(pos)
 	
-	if result:
-		var collider = result.collider
-		if collider.has_method("take_damage"):
-			collider.take_damage(100)
-			trigger_kill_cam()
-		queue_free()
+	# Damage target
+	if collider.has_method("take_damage"):
+		collider.take_damage(damage)
+	
+	queue_free()
 
-func trigger_kill_cam():
-	Engine.time_scale = 0.2
-	var tween = create_tween()
-	tween.tween_callback(func(): Engine.time_scale = 1.0).set_delay(2.0)
+func create_impact_effect(pos):
+	# Simple flash effect
+	var light = OmniLight3D.new()
+	light.omni_range = 1.0
+	light.omni_energy = 3.0
+	light.light_color = Color(1.0, 0.8, 0.3)
+	light.position = Vector3.ZERO
+	add_child(light)
+	
+	# Particle would go here in full version
+	await get_tree().create_timer(0.1).timeout
+	if is_instance_valid(self):
+		pass # Light auto-free when parent freed

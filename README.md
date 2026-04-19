@@ -1,34 +1,40 @@
 # 🎯 Sniper 3D Linux
+A fully-featured first-person sniper game inspired by Sniper 3D mobile, built with Godot 4.
 
-A realistic first-person sniper simulation built with Godot 4.
+## Features
+- **Multiple Game Modes**: Campaign, Single Missions, Armory
+- **5 Sniper Rifles**: Hunter Rifle, M24, AWP, Barrett M82, MSR
+- **10 Mission Levels**: Progressive difficulty
+- **Pro Ballistics**: Wind drift, gravity, stability modifiers
+- **Scope System**: Multiple zoom levels, breathing sway, recoil
+- **Weapon Upgrades**: Purchase and upgrade weapons with in-game currency
+- **City & Warehouse Environments**: Multiple detailed levels
 
-## 🚀 Features
-- **Realistic Ballistics**: Bullet drop (gravity) and wind drift.
-- **Kar98 Mechanics**: Authentic bolt-action firing delay.
-- **Rangefinder**: Dedicated telescope to measure distance and wind speed.
-- **Pro Scope**: Zoomed view with crosshairs and breathing sway.
-- **Dynamic Environment**: Advanced lighting with SDFGI and SSR.
+## How to Play
+1. Install **Godot 4.x**
+2. Import this project
+3. Add Input Map:
+   - `shoot` → Left Mouse Button
+   - `scope` → Right Mouse Button  
+   - `reload` → R Key
+   - `toggle_zoom` → Scroll Wheel
+4. Press F5 to play
 
-## 🎮 Controls
-- **Mouse**: Look around
+## Controls
+- **Mouse**: Aim
 - **Left Click**: Shoot
 - **Right Click**: Toggle Scope
-- **R**: Rangefinder
-- **Esc**: Settings Menu
+- **R**: Reload
+- **Scroll**: Cycle Zoom
+- **Esc**: Exit to Menu
 
-## 🗺️ Project Roadmap (Todo)
-- [x] Basic FPS Movement and Rotation
-- [x] Sniper Scope and Zoom
-- [x] Rangefinder/Telescope System
-- [x] Realistic Ballistics (Wind & Gravity)
-- [x] Kar98 Bolt-Action Mechanics
-- [x] Basic AI Targets and Kill System
-- [x] Settings Menu (Sensitivity)
-- [ ] Advanced AI (Patrolling/Alerts)
-- [ ] Multiple Levels/Maps
-- [ ] High-Poly 3D Models (Blender)
-- [ ] Sound Effects (Gunshots, Wind, Impact)
-- [ ] Main Menu and Game State Management
+## Game Mechanics
+- **Stability**: Higher stability = less sway, faster recovery
+- **Wind**: Affects bullet trajectory
+- **Breath Hold**: Hold shift while scoped for precision
 
-## 📸 Screenshots
-Screenshots are stored in the `/docs` folder.
+## Version History
+- v1.0.0 - Initial release with full game loop
+
+## Credits
+Created by Prince000101
