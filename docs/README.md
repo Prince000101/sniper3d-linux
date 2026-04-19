@@ -18,11 +18,10 @@
 3. **Play:** Press **F5**
 
 ### If getting "Missing Project" error:
-Delete the `.godot` folder before opening:
+Delete the `.godot` folder in project directory:
 ```bash
-rm -rf ~/.godot
+rm -rf sniper_3d_linux/.godot
 ```
-Or clone fresh.
 
 ---
 
@@ -35,7 +34,7 @@ Or clone fresh.
 | Toggle Scope | Right Click |
 | Zoom In | Scroll Up |
 | Zoom Out | Scroll Down |
-| Quit | Esc |
+| Back to Menu | Esc |
 
 ---
 
@@ -45,19 +44,19 @@ Or clone fresh.
 sniper3d-linux/
 ├── project.godot          # Project configuration
 ├── scenes/
-│   ├── Main.tscn          # Main game level
-│   ├── MainMenu.tscn     # Main menu
-│   ├── Level2.tscn      # Level 2 (warehouse)
-│   └── Bullet.tscn      # Bullet projectile
+│   ├── Main.tscn          # Main game level (City)
+│   ├── MainMenu.tscn      # Main menu + Settings
+│   ├── Level2.tscn        # Level 2 (Warehouse)
+│   └── Bullet.tscn       # Bullet projectile
 ├── scripts/
 │   ├── Player.gd         # Player controls & shooting
-│   ├── Target.gd        # Enemy AI
-│   ├── Bullet.gd       # Bullet physics
-│   ├── GameManager.gd   # Game state & save
-│   ├── MainMenu.gd     # Menu logic
-│   └── WeaponModels.gd # Weapon models
+│   ├── Target.gd         # Enemy AI
+│   ├── Bullet.gd         # Bullet physics
+│   ├── GameManager.gd     # Game state & save
+│   ├── MainMenu.gd       # Menu + Settings logic
+│   └── WeaponModels.gd   # Weapon models
 └── docs/
-    └── README.md       # This file
+    └── README.md         # This file
 ```
 
 ---
@@ -67,13 +66,14 @@ sniper3d-linux/
 ### Godot Version
 - **Godot 4.1+** (uses GL Compatibility renderer)
 
-### Input System
-- Uses **InputEventMouseButton** directly (not mapped actions)
-- Mouse sensitivity: `0.002` (adjustable in Player.gd)
+### Mouse Sensitivity
+- **Default: 0.0003** (very slow)
+- Adjustable in Settings menu (0.1 - 2.0)
+- Multiplier: x15 for smooth movement
 
 ### Key Variables (Player.gd)
 ```gdscript
-var mouse_sensitivity = 0.002
+var mouse_sensitivity = 0.0003
 var weapon_damage = 100
 var reload_time = 2.0
 var weapon_zoom = 4
@@ -99,47 +99,50 @@ var lifetime = 3.0
 ### Bullet error "omni_energy"
 - Use `light_energy` instead (Godot 4 syntax)
 
-### Buttons not working
-- Use `action_mode = 0` in Button nodes
-- Or use direct signal connection in code
+### Controls too fast/slow
+- Adjust `mouse_sensitivity` in Player.gd (line 3)
+- Or use Settings slider in main menu
 
-### Controls not responding
-- Ensure mouse is captured: `Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)`
-- Release on exit: `Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)`
+### Scope too dark
+- Scope overlay now has 50% opacity (brighter)
+- Green crosshairs for visibility
 
 ---
 
-## 🎯 Game Features (Current)
+## 🎯 Game Features (v1.0.2)
 
-- [x] Main Menu with buttons
-- [x] Day/night environment
+- [x] Main Menu
+- [x] Settings Panel (mouse sensitivity)
+- [x] Day environment (blue sky, fog)
 - [x] City rooftop level
+- [x] Warehouse level (Level 2)
 - [x] 5 Targets per level
-- [x] Sniper rifle model
-- [x] Scope with zoom (4x-12x)
-- [x] Green scope crosshair
-- [x] Wind indicator
-- [x] Distance indicator
+- [x] Sniper rifle model (barrel, stock, scope)
+- [x] Scope with zoom (4x, 6x, 8x, 10x, 12x)
+- [x] Green scope crosshair with circle border
+- [x] Wind indicator (E/W direction)
+- [x] Distance indicator (meters when scoped)
+- [x] Zoom level indicator
 - [x] Kill counter
 - [x] Target counter
 - [x] Reload bar
-- [x] Bullet physics
-- [x] Target death animation
+- [x] Bullet physics with gravity
+- [x] Target death animation (fall backward)
+- [x] ESC returns to menu
 
 ---
 
 ## 📋 TODO / Coming Soon
 
-- [ ] Settings menu (sensitivity slider)
-- [ ] Multiple weapon types
+- [ ] Save/Load game progress
 - [ ] Weapon shop/Armory
-- [ ] More levels
 - [ ] Sound effects
 - [ ] High-poly 3D models (Blender)
+- [ ] More levels (3+)
 - [ ] Multiplayer/PvP
 
 ---
 
 ## 👤 Author
-Created by Prince000101
+**Prince000101**  
 Email: kumar.prince7428@gmail.com

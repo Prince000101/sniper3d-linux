@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-var mouse_sensitivity = 0.002
+var mouse_sensitivity = 0.0003
 
 enum { IDLE, AIMING, SCOPED, RELOADING, SHOOTING }
 var current_state = IDLE
@@ -45,7 +45,7 @@ func setup_visuals():
 
 func _input(event):
 	if event is InputEventMouseMotion:
-		var sensitivity = mouse_sensitivity * 20.0
+		var sensitivity = mouse_sensitivity * 15.0
 		rotate_y(-event.relative.x * sensitivity)
 		camera.rotate_x(-event.relative.y * sensitivity)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-89), deg_to_rad(89))
@@ -59,6 +59,9 @@ func _input(event):
 			zoom_in()
 		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			zoom_out()
+		
+		if event.button_index == MOUSE_BUTTON_ESCAPE and event.pressed:
+			toggle_pause()
 
 func _process(delta):
 	update_breathing(delta)
@@ -89,6 +92,9 @@ func update_distance_indicator():
 			distance_indicator.text = "DISTANCE: %.1fm" % dist
 		else:
 			distance_indicator.text = "DISTANCE: ---"
+
+func toggle_pause():
+	get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 
 func toggle_scope():
 	is_scoped = !is_scoped
